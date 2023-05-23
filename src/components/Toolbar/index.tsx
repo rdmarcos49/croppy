@@ -8,10 +8,10 @@ import styles from './styles.module.scss'
 
 export const Toolbar = () => (
   <div className={styles.container}>
-    <button className={styles.action}>
+    <button className={`${styles.action} ${styles['action--disabled']}`} disabled>
       <img className={styles.icon} alt='undo' src={UndoIcon} />
     </button>
-    <button className={styles.action}>
+    <button className={`${styles.action} ${styles['action--disabled']}`} disabled>
       <img className={styles.icon} alt='redo' src={RedoIcon} />
     </button>
 

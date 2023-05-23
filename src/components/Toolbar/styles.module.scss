@@ -6,13 +6,29 @@
   gap: 8px;
   justify-content: center;
   padding: 8px;
+  width: fit-content;
 }
 
 .action {
   background-color: transparent;
   border: none;
   border-radius: 4px;
+  cursor: pointer;
   padding: 4px;
+  transition: scale 200ms ease;
+
+  &:hover img {
+    scale: 1.1;
+  }
+
+  &--disabled {
+    cursor: default;
+    opacity: 0.2;
+    
+    &:hover img {
+      scale: 1;
+    }
+  }
 }
 
 .icon {
