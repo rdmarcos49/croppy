@@ -1,0 +1,31 @@
+.container {
+  background: var(--quaternary-color);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  height: 64px;
+  opacity: 0.75;
+  outline: none;
+  transition: filter 200ms ease;
+  width: 64px;
+
+  &:hover {
+    filter: brightness(1.1);
+  }
+
+  &:focus {
+    box-shadow:
+      0 0 0 2px var(--quaternary-color),
+      0 0 0 4px var(--primary-color)
+    ;
+  }
+
+  &:focus:hover {
+    filter: none;
+  }
+}
+
+.image {
+  max-height: 100%;
+  max-width: 100%;
+}
