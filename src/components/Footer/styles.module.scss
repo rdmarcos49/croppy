@@ -1,12 +1,28 @@
 .container {
   background-color: var(--quaternary-color);
   margin-top: 16px;
-  width: 100%;
+  width: 100vw;
 }
 
 .inner-wrapper {
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin: 0 auto;
   max-width: 1200px;
   padding: 8px 0;
   text-align: center;
   width: 100%;
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+  }
+}
+
+.highlight {
+  color: var(--secondary-color);
 }
