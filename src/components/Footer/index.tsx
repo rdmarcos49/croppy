@@ -1,14 +1,11 @@
-import { Layer } from '..'
-import DummyPhoto from '../../assets/chanito.jpg'
-import DummyPhoto2 from '../../assets/badbunny.jpeg'
 import styles from './styles.module.scss'
 
-export const Footer = () => {
-  return (
-    <div className={styles.container}>
-      <Layer thumbnail={DummyPhoto} />
-      <Layer thumbnail={DummyPhoto2} />
-      <Layer />
+export const Footer = () => (
+  <footer className={styles.container}>
+    <div className={styles['inner-wrapper']}>
+      Made with ❤ by <a href='https://www.linkedin.com/in/roberto-david-marcos/' target='_blank'> Roberto Marcos </a>
+      {' | '}
+      <a href="https://icons8.com/" target='_blank'>Icons made by Icons8</a>
     </div>
-  )
-}
+  </footer>
+)

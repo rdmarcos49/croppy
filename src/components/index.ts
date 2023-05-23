@@ -1,4 +1,6 @@
+export * from './Board'
 export * from './Footer'
 export * from './Layer'
+export * from './LayerList'
 export * from './Layout'
 export * from './Toolbar'

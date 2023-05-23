@@ -1,12 +1,12 @@
 .container {
-  align-items: center;
   background-color: var(--quaternary-color);
-  border-radius: 4px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  justify-content: center;
-  margin: 3rem 0 4rem;
-  padding: 8px;
-  width: fit-content;
+  margin-top: 16px;
+  width: 100%;
+}
+
+.inner-wrapper {
+  max-width: 1200px;
+  padding: 8px 0;
+  text-align: center;
+  width: 100%;
 }
