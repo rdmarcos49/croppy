@@ -1,10 +1,8 @@
-import { Layout, Layer } from './components'
+import { Layout, Footer } from './components'
 
 export const App = () => (
   <Layout>
-    <Layer thumbnail={'rober'} />
-    <Layer thumbnail={'rober'} />
-    <Layer />
+    <Footer />
   </Layout>
 )
 

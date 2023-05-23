@@ -1,13 +1,14 @@
 .container {
-  background: var(--quaternary-color);
+  background: var(--tertiary-color);
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  height: 64px;
+  height: 76px;
   opacity: 0.75;
   outline: none;
+  padding: 4px;
   transition: filter 200ms ease;
-  width: 64px;
+  width: 76px;
 
   &:hover {
     filter: brightness(1.1);
