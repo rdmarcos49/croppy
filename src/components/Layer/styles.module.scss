@@ -1,5 +1,5 @@
 .container {
-  background: var(--tertiary-color);
+  background: var(--quaternary-color);
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -15,10 +15,7 @@
   }
 
   &:focus {
-    box-shadow:
-      0 0 0 2px var(--quaternary-color),
-      0 0 0 4px var(--primary-color)
-    ;
+    box-shadow: 0 0 0 3px var(--tertiary-color);
   }
 
   &:focus:hover {

@@ -1,0 +1,29 @@
+.container {
+  align-items: center;
+  background-color: var(--quaternary-color);
+  border-radius: 8px;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  padding: 8px;
+}
+
+.action {
+  background-color: transparent;
+  border: none;
+  border-radius: 4px;
+  padding: 4px;
+}
+
+.icon {
+  height: 24px;
+  width: 24px;
+}
+
+.separator {
+  background-color: #CCC;
+  height: 80%;
+  margin: 0 8px;
+  opacity: 0.5;
+  width: 1px;
+}
