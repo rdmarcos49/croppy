@@ -7,7 +7,7 @@ import UndoIcon from '../../assets/Undo.png'
 import styles from './styles.module.scss'
 
 export const Toolbar = () => (
-  <div className={styles.container}>
+  <div className={`${styles.container} with-box-s`}>
     <button className={`${styles.action} ${styles['action--disabled']}`} disabled>
       <img className={styles.icon} alt='undo' src={UndoIcon} />
     </button>

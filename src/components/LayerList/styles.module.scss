@@ -1,12 +1,12 @@
 .container {
   align-items: center;
   background-color: var(--quaternary-color);
-  border-radius: 4px;
+  border-radius: 8px;
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
   justify-content: center;
   margin: 2rem 0;
-  padding: 8px;
+  padding: 16px 32px;
   width: fit-content;
 }

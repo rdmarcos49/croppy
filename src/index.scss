@@ -10,8 +10,8 @@
   -webkit-text-size-adjust: 100%;
   --primary-color: #025464;
   --secondary-color: #e57c23;
-  --tertiary-color: #e8aa42;
-  --quaternary-color: #f8f1f1;
+  --tertiary-color: #fefefe;
+  --quaternary-color: #7ba8b1;
 }
 
 * {
@@ -21,5 +21,11 @@
 }
 
 html {
-  background-color: var(--primary-color);
+  --primary-color-light: #02546422;
+  background-image: radial-gradient(var(--primary-color-light) 1px,transparent 0),radial-gradient(var(--primary-color-light) 1px,var(--tertiary-color) 0);
+  background-size: 40px 40px;
+}
+
+.with-box-s {
+  box-shadow: 0 1px 4px #00000040;
 }

@@ -1,15 +1,8 @@
 $primary-color-light: #02546411;
 
 .container {
-  background-image:
-    repeating-linear-gradient(
-      -45deg,
-      #ffffff 0px,
-      #ffffff 3px,
-      $primary-color-light 3px,
-      $primary-color-light 6px
-    )
-  ;
+  background-image: radial-gradient(var(--primary-color-light) 1px,transparent 0),radial-gradient(var(--primary-color-light) 1px,var(--tertiary-color) 0);
+  background-size: 40px 40px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
