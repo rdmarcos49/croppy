@@ -1,5 +1,29 @@
 .container {
+  align-items: center;
   background-color: var(--tertiary-color);
   border: 2px dashed var(--quaternary-color);
-  margin: 0 auto 16px;
+  display: flex;
+  justify-content: center;
+  margin: 0 60px 16px;
+  max-height: 50vh;
+}
+
+.image-wrapper {
+  background-color: red;
+  pointer-events: none;
+  position: relative;
+  width: fit-content;
+}
+
+.image {
+  display: block;
+  pointer-events: none;
+  height: 400px;
+  width: 250px;
+}
+
+.canvas {
+  left: 0;
+  position: absolute;
+  top: 0;
 }

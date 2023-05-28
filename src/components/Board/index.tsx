@@ -1,80 +1,116 @@
-import { useState, useEffect, useRef, MouseEvent } from 'react'
+import { useEffect, useRef, useState, MouseEvent } from 'react'
+import ChanitoImage from '../../assets/chanito.jpg'
 import styles from './styles.module.scss'
 
-function obtenerTamanoEnKB (objeto) {
-  const jsonString = JSON.stringify(objeto)
-  const bytes = new Blob([jsonString]).size
-  const kilobytes = bytes / 1024
-  return kilobytes
+type Coordinate = {
+  x: number,
+  y: number
+}
+
+interface IShapePoints {
+  list: Coordinate[]
 }
 
 export const Board = () => {
-  const [isDrawign, setIsDrawing] = useState(false)
-  const movsRef = useRef({
-    movements: []
-  })
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const contextRef = useRef<CanvasRenderingContext2D | null>(null)
+  const [image, setImage] = useState<HTMLImageElement | null>(null)
+  const [isDrawing, setIsDrawing] = useState(false)
+  const shapePointsRef = useRef<IShapePoints>({
+    list: []
+  })
 
-  // const size = obtenerTamanoEnKB(JSON.stringify(movsRef.current.movements))
+  console.log({ canvasRef })
+  console.log({ image })
 
-  console.log(contextRef.current)
+  useEffect(() => {
+    if (!canvasRef.current) return
+
+    const newImage = new Image()
+    newImage.src = ChanitoImage
+
+    setImage(newImage)
+  }, [canvasRef])
 
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
 
-    const context = canvas.getContext('2d')
-    if (!context) return
+    const ctx = canvasRef.current.getContext('2d')
+    if (!ctx) return
 
-    context.scale(1, 1)
-    context.imageSmoothingQuality = 'medium'
-    context.lineJoin = 'round'
-    context.lineCap = 'round'
-    context.strokeStyle = 'black'
-    contextRef.current = context
-  }, [])
+    if (!image) return
 
-  const startDrawing = ({ nativeEvent }: MouseEvent<HTMLCanvasElement>) => {
-    const {
-      offsetX: x,
-      offsetY: y
-    } = nativeEvent
-    contextRef.current?.beginPath()
-    contextRef.current?.moveTo(x, y)
+    canvas.width = image.width
+    canvas.height = image.height
+    ctx.drawImage(image, 0, 0)
+  }, [image])
+
+  function cropImageWithShape () {
+    const canvas = canvasRef.current
+    if (!canvas) return
+
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    if (!image) return
+
+    const shapePoints = shapePointsRef.current.list
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.drawImage(image, 0, 0)
+
+    ctx.globalCompositeOperation = 'destination-in'
+    ctx.beginPath()
+
+    // Draw the custom shape as a path
+    ctx.moveTo(shapePoints[0].x, shapePoints[0].y)
+    for (let i = 1; i < shapePoints.length; i++) {
+      ctx.lineTo(shapePoints[i].x, shapePoints[i].y)
+    }
+
+    ctx.closePath()
+    ctx.fill()
+
+    // Reset the global composite operation
+    ctx.globalCompositeOperation = 'source-over'
+  }
+
+  const handleOnMouseDown = (event: MouseEvent<HTMLCanvasElement>) => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+
     setIsDrawing(true)
+    const startX = event.clientX - canvas.offsetLeft
+    const startY = event.clientY - canvas.offsetTop
+    shapePointsRef.current.list.push({ x: startX, y: startY })
   }
 
-  const finishDrawing = () => {
-    contextRef.current?.closePath()
+  const handleOnMouseUp = () => {
+    console.log('handle mouse up!')
     setIsDrawing(false)
+    cropImageWithShape()
   }
 
-  const draw = ({ nativeEvent }: MouseEvent<HTMLCanvasElement>) => {
-    if (!isDrawign) return
-    if (!contextRef.current) return
+  const handleOnMouseMove = (event: MouseEvent<HTMLCanvasElement>) => {
+    const canvas = canvasRef.current
+    if (!isDrawing) return
+    if (!canvas) return
 
-    const {
-      offsetX: x,
-      offsetY: y
-    } = nativeEvent
-
-    movsRef.current.movements.push({ x, y })
-
-    contextRef.current.lineTo(x, y)
-    contextRef.current.stroke()
+    const x = event.clientX - canvas.offsetLeft
+    const y = event.clientY - canvas.offsetTop
+    shapePointsRef.current.list.push({ x, y })
   }
 
   return (
     <canvas
-      className={`${styles.container} with-box-shadow`}
-      onMouseDown={startDrawing}
-      onMouseUp={finishDrawing}
-      onMouseMove={draw}
-      onMouseLeave={finishDrawing}
+      id='myCanvas'
       ref={canvasRef}
-      width={800}
-      height={550}
+      className={styles.container}
+      onMouseDown={handleOnMouseDown}
+      onMouseUp={handleOnMouseUp}
+      onMouseMove={handleOnMouseMove}
     />
   )
 }
+
+export default Board
