@@ -19,17 +19,23 @@ export const Board = () => {
     list: []
   })
 
-  console.log({ canvasRef })
-  console.log({ image })
-
   useEffect(() => {
-    if (!canvasRef.current) return
+    const canvas = canvasRef.current
+    if (!canvas) return
+
+    const ctx = canvasRef.current.getContext('2d')
+    if (!ctx) return
 
     const newImage = new Image()
     newImage.src = ChanitoImage
 
-    setImage(newImage)
-  }, [canvasRef])
+    newImage.onload = function () {
+      canvas.width = newImage.width
+      canvas.height = newImage.height
+      ctx.drawImage(newImage, 0, 0)
+      setImage(newImage)
+    }
+  }, [])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -40,9 +46,9 @@ export const Board = () => {
 
     if (!image) return
 
-    canvas.width = image.width
-    canvas.height = image.height
-    ctx.drawImage(image, 0, 0)
+    canvas.width = canvas.clientWidth
+    canvas.height = canvas.clientHeight
+    ctx.drawImage(image, 0, 0, canvas.clientWidth, canvas.clientHeight)
   }, [image])
 
   function cropImageWithShape () {
@@ -57,8 +63,9 @@ export const Board = () => {
     const shapePoints = shapePointsRef.current.list
 
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    ctx.drawImage(image, 0, 0)
+    ctx.drawImage(image, 0, 0, canvas.clientWidth, canvas.clientHeight)
 
+    ctx.lineCap = 'round'
     ctx.globalCompositeOperation = 'destination-in'
     ctx.beginPath()
 
@@ -81,12 +88,11 @@ export const Board = () => {
 
     setIsDrawing(true)
     const startX = event.clientX - canvas.offsetLeft
-    const startY = event.clientY - canvas.offsetTop
+    const startY = event.clientY - canvas.offsetTop + window.scrollY
     shapePointsRef.current.list.push({ x: startX, y: startY })
   }
 
   const handleOnMouseUp = () => {
-    console.log('handle mouse up!')
     setIsDrawing(false)
     cropImageWithShape()
   }
@@ -97,7 +103,8 @@ export const Board = () => {
     if (!canvas) return
 
     const x = event.clientX - canvas.offsetLeft
-    const y = event.clientY - canvas.offsetTop
+    const y = event.clientY - canvas.offsetTop + window.scrollY
+
     shapePointsRef.current.list.push({ x, y })
   }
 
@@ -105,7 +112,7 @@ export const Board = () => {
     <canvas
       id='myCanvas'
       ref={canvasRef}
-      className={styles.container}
+      className={styles.canvas}
       onMouseDown={handleOnMouseDown}
       onMouseUp={handleOnMouseUp}
       onMouseMove={handleOnMouseMove}
