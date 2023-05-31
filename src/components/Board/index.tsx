@@ -86,9 +86,11 @@ export const Board = () => {
     const canvas = canvasRef.current
     if (!canvas) return
 
+    const { offsetLeft, offsetTop } = getOffsets(canvas)
+
     setIsDrawing(true)
-    const startX = event.clientX - canvas.offsetLeft
-    const startY = event.clientY - canvas.offsetTop + window.scrollY
+    const startX = event.clientX - offsetLeft
+    const startY = event.clientY - offsetTop + window.scrollY
     shapePointsRef.current.list.push({ x: startX, y: startY })
   }
 
@@ -102,21 +104,43 @@ export const Board = () => {
     if (!isDrawing) return
     if (!canvas) return
 
-    const x = event.clientX - canvas.offsetLeft
-    const y = event.clientY - canvas.offsetTop + window.scrollY
+    const { offsetLeft, offsetTop } = getOffsets(canvas)
+
+    const x = event.clientX - offsetLeft
+    const y = event.clientY - offsetTop + window.scrollY
 
     shapePointsRef.current.list.push({ x, y })
   }
 
+  const getOffsets = (htmlElement: HTMLCanvasElement) => {
+    const htmlOffsetLeft = htmlElement?.offsetLeft
+    const htmlOffsetTop = htmlElement?.offsetTop
+
+    const parent = htmlElement.offsetParent
+
+    const fallbackOffsetLeft = parent?.offsetLeft
+    const fallbackOffsetTop = parent?.offsetTop
+
+    const offsetLeft = htmlOffsetLeft || fallbackOffsetLeft
+    const offsetTop = htmlOffsetTop || fallbackOffsetTop
+
+    return {
+      offsetLeft,
+      offsetTop
+    }
+  }
+
   return (
-    <canvas
-      id='myCanvas'
-      ref={canvasRef}
-      className={styles.canvas}
-      onMouseDown={handleOnMouseDown}
-      onMouseUp={handleOnMouseUp}
-      onMouseMove={handleOnMouseMove}
-    />
+    <div className={styles.container}>
+      <canvas
+        id='myCanvas'
+        ref={canvasRef}
+        className={styles.canvas}
+        onMouseDown={handleOnMouseDown}
+        onMouseUp={handleOnMouseUp}
+        onMouseMove={handleOnMouseMove}
+      />
+    </div>
   )
 }
 
