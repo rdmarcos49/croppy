@@ -8,10 +8,9 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-  --primary-color: #025464;
+  --primary-color: #7ba8b1;
   --secondary-color: #e57c23;
   --tertiary-color: #fefefe;
-  --quaternary-color: #7ba8b1;
 }
 
 * {
@@ -21,7 +20,7 @@
 }
 
 html {
-  --primary-color-light: #02546422;
+  --primary-color-light: #7ba8b122;
   background-image: radial-gradient(var(--primary-color-light) 1px,transparent 0),radial-gradient(var(--primary-color-light) 1px,var(--tertiary-color) 0);
   background-size: 40px 40px;
 }

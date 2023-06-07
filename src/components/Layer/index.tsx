@@ -7,9 +7,6 @@ type LayerProps = {
 
 export const Layer = ({ thumbnail }: LayerProps) => (
   <button className={styles.container}>
-    {thumbnail
-      ? <img className={styles.image} alt='layer' src={thumbnail} />
-      : <img className={styles.image} alt='add-new-image' src={PlusIcon} />
-    }
+    <img className={styles.image} alt='add-new-image' src={PlusIcon} />
   </button>
 )

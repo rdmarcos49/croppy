@@ -1,0 +1,35 @@
+.container {
+  align-items: center;
+  aspect-ratio: 16 / 9;
+  background-color: var(--tertiary-color);
+  border: dashed 2px var(--primary-color);
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+  max-width: 600px;
+  outline: none;
+  width: 100%;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+.text {
+  color: #CCC;
+  font-size: 1.5rem;
+}
+
+.icon {
+  margin: 4px;
+  max-width: 64px;
+  opacity: 0.5;
+  width: 100%;
+
+  &:-moz-drag-over {
+    background-color: blue;
+  }
+}
