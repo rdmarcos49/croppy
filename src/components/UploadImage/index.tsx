@@ -10,15 +10,17 @@ export const UploadImage = () => {
     console.log(event)
   }
   return (
-    <button
-      className={styles.container}
-      onDragOver={handleOnDrag}
-      onDrop={handleOnDrop}
-    >
-      <img alt='upload image' className={styles.icon} src={UploadIcon} />
-      <span className={styles.text}>
-        Click or drag and drop to upload your image
-      </span>
-    </button>
+    <section className={styles.container}>
+      <button
+        className={styles['drag-zone']}
+        onDragOver={handleOnDrag}
+        onDrop={handleOnDrop}
+      >
+        <img alt='upload image' className={styles.icon} src={UploadIcon} />
+        <span className={styles.text}>
+          Click or drag and drop to upload your image
+        </span>
+      </button>
+    </section>
   )
 }

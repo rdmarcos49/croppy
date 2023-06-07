@@ -2,11 +2,12 @@
   align-items: center;
   background-color: var(--primary-color);
   border-radius: 8px;
+  top: 3vh;
   display: flex;
   gap: 8px;
   justify-content: center;
-  margin: 1.5rem 0;
   padding: 8px;
+  position: absolute;
   width: fit-content;
 }
 

@@ -1,4 +1,11 @@
 .container {
+  padding: 16px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.drag-zone {
   align-items: center;
   aspect-ratio: 16 / 9;
   background-color: var(--tertiary-color);
@@ -10,6 +17,7 @@
   gap: 16px;
   justify-content: center;
   max-width: 600px;
+  padding: 16px 32px;
   outline: none;
   width: 100%;
 
