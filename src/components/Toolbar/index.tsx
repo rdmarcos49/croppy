@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import CutIcon from '../../assets/cut.png'
 import EraseIcon from '../../assets/erase.png'
 import MoveIcon from '../../assets/move.png'
@@ -7,83 +7,56 @@ import RedoIcon from '../../assets/redo.png'
 import UndoIcon from '../../assets/Undo.png'
 import styles from './styles.module.scss'
 
-type Coordinate = {
-  x: number,
-  y: number
-}
-
 export const Toolbar = () => {
-  const containerRef = useRef<HTMLElement | null>(null)
+  const [isDragging, setIsDragging] = useState(false)
+  const [position, setPosition] = useState({ x: 0, y: 0 })
+  const draggableRef = useRef(null)
 
   useEffect(() => {
-    if (!containerRef.current) return
-
-    let isMoving = false
-    let mousePosition: Coordinate = {
-      x: 0,
-      y: 0
-    }
+    const container = document.querySelector('main')
+    const draggable = draggableRef.current
 
     const handleMouseDown = (event) => {
-      if (event.target.nodeName !== 'SECTION') return
-
-      mousePosition = {
-        x: event.clientX,
-        y: event.clientY
-      }
-      isMoving = true
+      setIsDragging(true)
     }
 
     const handleMouseMove = (event) => {
-      if (!isMoving) return
-      if (!containerRef.current) return
+      if (!isDragging) return
 
-      const { offsetLeft, offsetTop } = event.target
+      const containerRect = container.getBoundingClientRect()
+      const draggableRect = draggable.getBoundingClientRect()
+      const initialX = event.clientX - draggableRect.width / 2
+      const initialY = event.clientY - draggableRect.height / 2
+      const x = initialX - containerRect.left
+      const y = initialY - containerRect.top
 
-      const moveValueX = event.clientX > mousePosition.x ? Math.abs(event.clientX - mousePosition.x) : -Math.abs(event.clientX - mousePosition.x)
-      const moveValueY = event.clientY > mousePosition.y ? Math.abs(event.clientY - mousePosition.y) : -Math.abs(event.clientY - mousePosition.y)
-
-      mousePosition = {
-        x: event.clientX,
-        y: event.clientY
-      }
-
-      const newContainerPositionX = offsetLeft + moveValueX
-      const newContainerPositionY = offsetTop + moveValueY
-
-      containerRef.current.style.left = `${newContainerPositionX}px`
-      containerRef.current.style.top = `${newContainerPositionY}px`
+      setPosition({ x, y })
     }
 
-    const handleOnMouseUp = () => {
-      isMoving = false
+    const handleMouseUp = () => {
+      setIsDragging(false)
     }
 
-    const handleMouseLeave = (event) => {
-      isMoving = false
-      mousePosition = {
-        x: 0,
-        y: 0
-      }
-    }
-
-    containerRef.current.addEventListener('mousedown', handleMouseDown)
-    containerRef.current.addEventListener('mouseup', handleOnMouseUp)
-    containerRef.current.addEventListener('mousemove', handleMouseMove)
+    draggable.addEventListener('mousedown', handleMouseDown)
+    window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mouseup', handleMouseUp)
 
     return () => {
-      containerRef.current?.removeEventListener('mousedown', handleMouseDown)
-      containerRef.current?.removeEventListener('mouseup', handleOnMouseUp)
-      containerRef.current?.removeEventListener('mousemove', handleMouseMove)
-      containerRef.current?.removeEventListener('mouseleave', handleMouseLeave)
+      draggable.removeEventListener('mousedown', handleMouseDown)
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('mouseup', handleMouseUp)
     }
-  }, [])
+  }, [isDragging])
 
   return (
-    <section
-      ref={containerRef}
-      className={`${styles.container} with-box-s`}
-    >
+      <section ref={draggableRef}
+        className={styles.container}
+        style={{
+          position: 'absolute',
+          top: position.y,
+          left: position.x,
+          cursor: 'move'
+        }}>
       <button className={`${styles.action} ${styles['action--disabled']}`} disabled>
         <img className={styles.icon} alt='undo' src={UndoIcon} />
       </button>
@@ -105,6 +78,8 @@ export const Toolbar = () => {
       <button className={styles.action}>
         <img className={styles.icon} alt='pen' src={PenIcon} />
       </button>
-    </section>
+      </section>
   )
 }
+
+export default Toolbar
