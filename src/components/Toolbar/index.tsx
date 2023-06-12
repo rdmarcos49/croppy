@@ -7,20 +7,29 @@ import RedoIcon from '../../assets/redo.png'
 import UndoIcon from '../../assets/Undo.png'
 import styles from './styles.module.scss'
 
+const CONTAINER_NODENAME = 'SECTION'
+
 export const Toolbar = () => {
   const [isDragging, setIsDragging] = useState(false)
-  const [position, setPosition] = useState({ x: 0, y: 0 })
-  const draggableRef = useRef(null)
+  const [position, setPosition] = useState({ x: 50, y: 50 })
+  const draggableRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     const container = document.querySelector('main')
     const draggable = draggableRef.current
 
-    const handleMouseDown = (event) => {
+    if (!container || !draggable) return
+
+    const handleMouseDown = (event: MouseEvent) => {
+      if (!event.target) return
+
+      if (event.target.nodeName !== CONTAINER_NODENAME) return
       setIsDragging(true)
+      draggable.classList.add(styles['container--grabbing'])
     }
 
-    const handleMouseMove = (event) => {
+    const handleMouseMove = (event: MouseEvent) => {
+      event.preventDefault()
       if (!isDragging) return
 
       const containerRect = container.getBoundingClientRect()
@@ -35,6 +44,7 @@ export const Toolbar = () => {
 
     const handleMouseUp = () => {
       setIsDragging(false)
+      draggable.classList.remove(styles['container--grabbing'])
     }
 
     draggable.addEventListener('mousedown', handleMouseDown)
@@ -49,14 +59,14 @@ export const Toolbar = () => {
   }, [isDragging])
 
   return (
-      <section ref={draggableRef}
-        className={styles.container}
-        style={{
-          position: 'absolute',
-          top: position.y,
-          left: position.x,
-          cursor: 'move'
-        }}>
+    <section ref={draggableRef}
+      className={styles.container}
+      style={{
+        position: 'absolute',
+        top: position.y,
+        left: position.x
+      }}
+    >
       <button className={`${styles.action} ${styles['action--disabled']}`} disabled>
         <img className={styles.icon} alt='undo' src={UndoIcon} />
       </button>
@@ -78,7 +88,7 @@ export const Toolbar = () => {
       <button className={styles.action}>
         <img className={styles.icon} alt='pen' src={PenIcon} />
       </button>
-      </section>
+    </section>
   )
 }
 

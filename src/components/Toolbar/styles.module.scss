@@ -12,10 +12,14 @@
   width: fit-content;
   z-index: 10;
 
-  &:active {
-    *:not(section.container),
-    & > * {
-      pointer-events: none;
+  &--grabbing {
+    cursor: 'grabbing';
+
+    &:active {
+      *:not(section.container),
+      & > * {
+        pointer-events: none;
+      }
     }
   }
 }
