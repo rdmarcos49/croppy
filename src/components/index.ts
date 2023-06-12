@@ -1,4 +1,5 @@
 export * from './Board'
+export * from './DragAndDropLayout'
 export * from './Footer'
 export * from './Layer'
 export * from './LayerList'
