@@ -1,4 +1,3 @@
-import { DragAndDropLayout } from '..'
 import CutIcon from '../../assets/cut.png'
 import EraseIcon from '../../assets/erase.png'
 import MoveIcon from '../../assets/move.png'
@@ -9,7 +8,7 @@ import styles from './styles.module.scss'
 
 export const Toolbar = () => {
   return (
-    <DragAndDropLayout className={styles.container}>
+    <section className={styles.container}>
       <button className={`${styles.action} ${styles['action--disabled']}`} disabled>
         <img className={styles.icon} alt='undo' src={UndoIcon} />
       </button>
@@ -31,7 +30,7 @@ export const Toolbar = () => {
       <button className={styles.action}>
         <img className={styles.icon} alt='pen' src={PenIcon} />
       </button>
-    </DragAndDropLayout>
+    </section>
   )
 }
 
