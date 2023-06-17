@@ -17,24 +17,9 @@
 
 .canvas {
   align-items: center;
-  background-color: var(--tertiary-color);
   border: 2px dashed var(--primary-color);
   display: flex;
   justify-content: center;
   max-height: 50vh;
   z-index: 1;
-}
-
-.image-wrapper {
-  background-color: red;
-  pointer-events: none;
-  position: relative;
-  width: fit-content;
-}
-
-.image {
-  display: block;
-  pointer-events: none;
-  height: 400px;
-  width: 250px;
 }

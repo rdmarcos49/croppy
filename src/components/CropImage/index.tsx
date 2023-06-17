@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState, MouseEvent } from 'react'
 import ChanitoImage from '../../assets/chanito.jpg'
 import styles from './styles.module.scss'
-import { UploadImage } from '..'
 
 type Coordinate = {
   x: number,
@@ -12,8 +11,7 @@ interface IShapePoints {
   list: Coordinate[]
 }
 
-export const Board = () => {
-  return <UploadImage />
+export const CropImage = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [image, setImage] = useState<HTMLImageElement | null>(null)
   const [isDrawing, setIsDrawing] = useState(false)
@@ -131,7 +129,6 @@ export const Board = () => {
       offsetTop
     }
   }
-
   return (
     <div className={styles.container}>
       <canvas
@@ -145,5 +142,3 @@ export const Board = () => {
     </div>
   )
 }
-
-export default Board

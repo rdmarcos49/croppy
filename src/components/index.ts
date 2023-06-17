@@ -1,4 +1,4 @@
-export * from './Board'
+export * from './CropImage'
 export * from './DragAndDropLayout'
 export * from './Footer'
 export * from './Layer'
