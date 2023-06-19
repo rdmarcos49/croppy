@@ -11,7 +11,12 @@ interface IShapePoints {
   list: Coordinate[]
 }
 
-export const CropImage = () => {
+interface CropImageProps {
+  file: File,
+  onChange: (file: File) => void
+}
+
+export const CropImage = ({ file, onChange }: CropImageProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [image, setImage] = useState<HTMLImageElement | null>(null)
   const [isDrawing, setIsDrawing] = useState(false)
@@ -20,6 +25,8 @@ export const CropImage = () => {
   })
 
   useEffect(() => {
+    if (!file) return
+
     const canvas = canvasRef.current
     if (!canvas) return
 
@@ -27,7 +34,7 @@ export const CropImage = () => {
     if (!ctx) return
 
     const newImage = new Image()
-    newImage.src = ChanitoImage
+    newImage.src = URL.createObjectURL(file)
 
     newImage.onload = function () {
       canvas.width = newImage.width
@@ -35,7 +42,7 @@ export const CropImage = () => {
       ctx.drawImage(newImage, 0, 0)
       setImage(newImage)
     }
-  }, [])
+  }, [file])
 
   useEffect(() => {
     const canvas = canvasRef.current
